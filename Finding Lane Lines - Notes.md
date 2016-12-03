@@ -1,3 +1,5 @@
+Color selection is not reliable, since it is very sensitive to illumination variations. So the standard pipeline of Lane Line Detection is: Grayscale --> Gaussian Blur --> Canny Edge Detection --> Hough Transform Line Detection
+
 ###1. Canny Edge Detection using OpenCV function `Canny`
 ```python
 edges = cv2.Canny(gray, low_threshold, high_threshold)
