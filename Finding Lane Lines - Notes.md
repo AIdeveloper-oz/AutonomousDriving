@@ -15,3 +15,7 @@ Operating on the image **edges** (the output from Canny) and the output from `Ho
 **rho** takes a minimum value of 1, and a reasonable starting place for **theta** is 1 degree (pi/180 in radians). Scale these values up to be more flexible in your definition of what constitutes a line.
 
 The **threshold** parameter specifies the minimum number of votes (intersections in a given grid cell) a candidate line needs to have to make it into the output. The empty **np.array([])** is just a placeholder, no need to change it. **min_line_length** is the minimum length of a line (in pixels) that you will accept in the output, and **max_line_gap** is the maximum distance (again, in pixels) between segments that you will allow to be connected into a single line.
+
+
+###Basics of Jupyter Notebook and Python
+see https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python
