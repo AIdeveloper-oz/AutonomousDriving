@@ -14,8 +14,8 @@ When use square function as the fit error in regression, we can use **calculus**
 
 A nice disscusion about these methods can be seen [Solving for regression parameters in closed-form vs gradient descent](http://stats.stackexchange.com/questions/23128/solving-for-regression-parameters-in-closed-form-vs-gradient-descent)
 
-###3. Error
-..1. sensor error
-..2. maliciously - being given bad data
-..3. transcription error, such as mistyping
-..4. unmodeled influences
+###3. Where does the Error come from ?
+⋅⋅1. sensor error
+⋅⋅2. maliciously - being given bad data
+⋅⋅3. transcription error, such as mistyping
+⋅⋅4. unmodeled influences
