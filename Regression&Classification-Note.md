@@ -10,6 +10,6 @@ When use square function as the fit error in regression, we can use **calculus**
 
 *Ordinary least squares (OLS)* is the simplest and thus most common estimator. The OLS method minimizes the **sum of squared residuals**, and leads to a **closed-form** expression (just the same with the above **cauculus** with square error). When refer to fit linear function `X*W=Y`, we can use `X'X*W=X'*Y` --> `W=(X'X)\(X'*Y)`. It is because that `X` may not be square matrix and may not have good inverse, while `X'X` is square matrix and always have good inverse for simple problem. In simple linear regression, where there is only one regressor (with a constant), the OLS coefficient estimates have a simple form.If the goal is either inference or predictive modeling, the performance of OLS estimates can be poor if multicollinearity is present, unless the sample size is large. But it's hard for storage and computation accuracy if the sample size is too large.
 
-Usually *Gradient descent* methods such as Newton-type method is a good way to solve **Least Square Problem** iterativelly and efficiently.
+*Gradient descent* methods such as Newton-type method is usually a good way to solve **Least Square Problem** iterativelly and efficiently.
 
 A nice disscusion about these methods can be seen [Solving for regression parameters in closed-form vs gradient descent](http://stats.stackexchange.com/questions/23128/solving-for-regression-parameters-in-closed-form-vs-gradient-descent)
