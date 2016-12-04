@@ -3,6 +3,7 @@
 **Classification**: the output is discreate, such as binary True/False, multiple category.
 For example, *Human Age Estimation* can be treated as regression problem if fraction is allowed, i.e. unlimited categories. While, it can also be treated as classification problem if there are only limited categories, like 1,2,3,...,150.
 
+
 ###2. Regression (Function Approximate)
 There are many estimation methods to solve a regression problem. see [Linear regression from wikipedia](https://en.wikipedia.org/wiki/Linear_regression). Before inducing these methods, we should need to know [What Is the Difference between  Linear and Nonlinear Equations in Regression Analysis?](http://blog.minitab.com/blog/adventures-in-statistics/what-is-the-difference-between-linear-and-nonlinear-equations-in-regression-analysis) and [What is regressor?](http://courses.umass.edu/pubp608/lectures/l8.pdf). Simply, a regressor is a variable `X` which may have multiple dimensions, and the linear model is the linear combination of these regressor, even its square, cube, log or other forms. Such as `Y = b0 + b1X + b2X^2`
 
@@ -21,6 +22,7 @@ P.S. the example in the course show that the best constant in terms of squared e
 
 A nice disscusion about these methods can be seen [Solving for regression parameters in closed-form vs gradient descent](http://stats.stackexchange.com/questions/23128/solving-for-regression-parameters-in-closed-form-vs-gradient-descent)
 
+
 ###3. Error & Cross Validation 
 Where does the Error come from ?
 ⋅⋅1. sensor error
@@ -30,6 +32,7 @@ Where does the Error come from ?
 
 So, we need to use **Cross Validation** to choose the model (among different structures and hyperparameters).
 Note: The goal of Machine Learning is "Generalization". The training data and test data are all sampled from the same distribution but they are i.i.d.
+
 
 ###4. Representation for regression
 The input can be scalar/vector, discrete/continuous, numerical/enumerated. Such as hair color can be blue, red, green, black .... A good representation for hair color is RGB value, which makes more sense.
