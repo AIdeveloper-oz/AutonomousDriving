@@ -23,8 +23,7 @@ The **threshold** parameter specifies the minimum number of votes (intersections
 ###3. Basics of Jupyter Notebook and Python
 see https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python
 
-###4. Improvement & Resources
-Further reading:
+###4. Further reading: Improvement & Resources
 Canny Edge Detection - In this portion of the pipeline, there are two main parameters you can tune: lower threshold and higher threshold. Your parameters here seem reasonable. If you want to play around with some more parameters here, check out this [link](http://stackoverflow.com/questions/21324950/how-to-select-the-best-set-of-parameters-in-canny-edge-detection-algorithm-imple). The tutorial in the link will describe a common method for choosing threshold in Canny Edge Detection.
 
 This research [paper](http://airccj.org/CSCP/vol5/csit53211.pdf) goes into details on how to detect curves and faded lanes. It uses an extended version of hough lines algorithm to detect tangents to the curve which can help you detect the curve.
