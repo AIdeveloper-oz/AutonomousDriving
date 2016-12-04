@@ -7,11 +7,11 @@ edges = cv2.Canny(gray, low_threshold, high_threshold)
 ```
 Applying Canny to the image **gray** and your output will be another image called **edges**. **low_threshold** and **high_threshold** are your thresholds for edge detection. The algorithm will first detect strong edge (strong gradient) pixels above the high_threshold, and reject pixels below the low_threshold. Next, pixels with values between the **low_threshold** and **high_threshold** will be included as long as they are connected to strong edges. The output edges is a binary image with white pixels tracing out the detected edges and black everywhere else.
 
-![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/CannyDetection.png.png "Canny Detection")
+![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/CannyDetection.png "Canny Detection")
 
 
 ###2. Hough Transform on Edges to detect lines using an OpenCV function called HoughLinesP
-![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/HoughTransform.png.png "Hough Transform")
+![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/HoughTransform.png "Hough Transform")
 
 ```python
 lines = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
