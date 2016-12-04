@@ -1,6 +1,7 @@
 Color selection is not reliable, since it is very sensitive to illumination variations. So the standard pipeline of Lane Line Detection is: 
 **Grayscale --> Gaussian Blur --> Canny Edge Detection --> ROI --> Hough Transform Line Detection --> Fit Lines With Slope --> Adaptive Temporally Smooth**
 
+
 ###1. Canny Edge Detection using OpenCV function `Canny`
 ```python
 edges = cv2.Canny(gray, low_threshold, high_threshold)
@@ -11,8 +12,6 @@ Applying Canny to the image **gray** and your output will be another image calle
 
 
 ###2. Hough Transform on Edges to detect lines using an OpenCV function called HoughLinesP
-![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/HoughTransform.png "Hough Transform")
-
 ```python
 lines = cv2.HoughLinesP(edges, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
 ```
@@ -24,9 +23,12 @@ Operating on the image **edges** (the output from Canny) and the output from `Ho
 
 The **threshold** parameter specifies the minimum number of votes (intersections in a given grid cell) a candidate line needs to have to make it into the output. The empty **np.array([])** is just a placeholder, no need to change it. **min_line_length** is the minimum length of a line (in pixels) that you will accept in the output, and **max_line_gap** is the maximum distance (again, in pixels) between segments that you will allow to be connected into a single line.
 
+![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/HoughTransform.png "Hough Transform")
+
 
 ###3. Basics of Jupyter Notebook and Python
 see https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python
+
 
 ###4. Further reading: Improvement & Resources
 Canny Edge Detection - In this portion of the pipeline, there are two main parameters you can tune: lower threshold and higher threshold. Your parameters here seem reasonable. If you want to play around with some more parameters here, check out this [link](http://stackoverflow.com/questions/21324950/how-to-select-the-best-set-of-parameters-in-canny-edge-detection-algorithm-imple). The tutorial in the link will describe a common method for choosing threshold in Canny Edge Detection.
