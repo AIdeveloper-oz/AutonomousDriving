@@ -14,6 +14,7 @@ P.S. the example in the course show that the best constant in terms of squared e
 ![alt text](https://github.com/charliememory/AutonomousDriving/tree/master/images/CloseformForRegression1.png "Closeform For Regression")
 
 ![alt text](https://github.com/charliememory/AutonomousDriving/tree/master/images/CloseformForRegression2.png "Closeform For Regression")
+![alt](http://github.com/charliememory/AutonomousDriving/tree/master/images/CloseformForRegression2.png)
 
 *Ordinary least squares (OLS)* is the simplest and thus most common estimator. The OLS method minimizes the **sum of squared residuals**, and leads to a **closed-form** expression (just the same with the above **cauculus** with square error). When refer to fit linear function `X*W=Y`, we can use `X'X*W=X'*Y` --> `W=(X'X)\(X'*Y)`. It is because that `X` may not be square matrix and may not have good inverse, while `X'X` is square matrix and always have good inverse for simple problem. In simple linear regression, where there is only one regressor (with a constant), the OLS coefficient estimates have a simple form.If the goal is either inference or predictive modeling, the performance of OLS estimates can be poor if multicollinearity is present, unless the sample size is large. But it's hard for storage and computation accuracy if the sample size is too large.
 
