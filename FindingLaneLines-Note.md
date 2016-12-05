@@ -10,7 +10,7 @@ edges = cv2.Canny(gray, low_threshold, high_threshold)
 Applying Canny to the image **gray** and your output will be another image called **edges**. **low_threshold** and **high_threshold** are your thresholds for edge detection. The algorithm will first detect strong edge (strong gradient) pixels above the high_threshold, and reject pixels below the low_threshold. Next, pixels with values between the **low_threshold** and **high_threshold** will be included as long as they are connected to strong edges. The output edges is a binary image with white pixels tracing out the detected edges and black everywhere else.
 
 <p align="center">
-  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/CannyDetection.png" width="800"/>
+  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/CannyDetection.png" />
 </p>
 
 
@@ -27,7 +27,7 @@ Operating on the image **edges** (the output from Canny) and the output from `Ho
 The **threshold** parameter specifies the minimum number of votes (intersections in a given grid cell) a candidate line needs to have to make it into the output. The empty **np.array([])** is just a placeholder, no need to change it. **min_line_length** is the minimum length of a line (in pixels) that you will accept in the output, and **max_line_gap** is the maximum distance (again, in pixels) between segments that you will allow to be connected into a single line.
 
 <p align="center">
-  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/HoughTransform.png" width="800"/>
+  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/HoughTransform.png" />
 </p>
 
 
