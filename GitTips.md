@@ -29,3 +29,4 @@ Fixed my Permission denied (publickey) using this guide: [help.github.com/articl
 
 
 ###2. Common Git Command, see [git-cheat-sheet](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
+git add . & git commit -m 'update' & git push

@@ -47,4 +47,4 @@ Besides the classical **Gradient Descent**, there are some other kinds of advanc
 
 ###7. Restriction Bias 
 Besides the classical **Gradient Descent**, there are some other kinds of advanced methods to find better local minimum.
-<img src="https://github.com/charliememory/AutonomousDriving/blob/master/images/RestrictionBias.png" width="500" align="middle">
+<p style="text-align:center;"><img src="https://github.com/charliememory/AutonomousDriving/blob/master/images/RestrictionBias.png" width="700" align="middle"></center></p>
