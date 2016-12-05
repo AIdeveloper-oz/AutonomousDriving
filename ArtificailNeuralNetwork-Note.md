@@ -42,12 +42,13 @@ Besides the classical **Gradient Descent**, there are some other kinds of advanc
 
 4) Penalty for "complexity", widely used in practice. There are three main reason lead to complexity: **more nodes**, **more layers**, **large numbers**. These reasons will make the model learn much about the noise, i.e. overfitting. Specially, the fore two reasons are easy to understand (just like high order in regression) and they are usually hyperparameters (recent work [Convolutional Neural Fabrics](https://github.com/shreyassaxena/convolutional-neural-fabrics) shows that NN structure can also be learned to some extend). While the **large numbers** means that the value of weights `W` is large. `W` is always learned from the data, researcher always constrain it through adding penalty item in loss function.
 
-![alt text](https://github.com/charliememory/AutonomousDriving/blob/master/images/Optimization.png "Optimization")
+<p align="center">
+  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/Optimization.png" width="700"  alt="Optimization"/>
+</p>
 
 
 ###7. Restriction Bias 
 Besides the classical **Gradient Descent**, there are some other kinds of advanced methods to find better local minimum.
-<div style="text-align:center"><img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/RestrictionBias.png" width="700"/></div>
 <p align="center">
-  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/RestrictionBias.png" width="700"/>
+  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/RestrictionBias.png" width="700" alt="RestrictionBias"/>
 </p>
