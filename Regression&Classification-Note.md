@@ -25,10 +25,14 @@ A nice disscusion about these methods can be seen [Solving for regression parame
 
 ###3. Error & Cross Validation 
 Where does the Error come from ?
-⋅⋅1. sensor error
-⋅⋅2. maliciously - being given bad data
-⋅⋅3. transcription error, such as mistyping
-⋅⋅4. unmodeled influences
+
+1) sensor error
+
+2) maliciously - being given bad data
+
+3) transcription error, such as mistyping
+
+4) unmodeled influences
 
 So, we need to use **Cross Validation** to choose the model (among different structures and hyperparameters).
 Note: The goal of Machine Learning is "Generalization". The training data and test data are all sampled from the same distribution but they are i.i.d.
