@@ -75,6 +75,7 @@ As shown below, for proception unit, the hypothesis is restricted to half space.
 Two important related problem:
 
 1) How to choose model structure? Using the principle of occam's razor.
+
 2) How to initilize weights? Using **Small Random Values** (also can be explained with occam's razor). **Small** can prevent **large numbers**, and **Random** can help to skip bad local minimum.
 <p align="center"> 
   <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/PreferenceBias.png" width="650"/>
