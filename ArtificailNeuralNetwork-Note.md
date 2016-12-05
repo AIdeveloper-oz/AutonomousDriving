@@ -61,8 +61,21 @@ Besides the classical **Gradient Descent**, there are some other kinds of advanc
 </p>
 
 
-###7. Restriction Bias 
-Besides the classical **Gradient Descent**, there are some other kinds of advanced methods to find better local minimum.
-<p align="center">
+###7. Restriction Bias & Preference Bias [link](http://jmvidal.cse.sc.edu/talks/decisiontrees/restandprefbias.html)
+
+**Restriction Bias** is an inductive bias where the set of hypothesis considered is restricted to a smaller set. E.g. Candidate-Elimination searches an incomplete hypothesis space (it can only represent some hypothesis) but does so completely. 
+
+As shown below, for proception unit, the hypothesis is restricted to half space. And from the hypothesis' view, nework of threshold-like unit (such as proception and sigmoid unit) can only model Boolean function. While, if we have enouth hidden units, each hidden unit can worry about one little patch of the function that the network needs to model, then the patches get set at hidden layers and get stitched at the output layer. So that the network with one hidden layer can model continuous function. And network with two hidden layers can model arbitrary function even itis discontinuous. So if the network is complex enough, we can model anything. But note that, in practise, we give the bounded number of layers and nodes, so the fixed network can only capture whatever it can capture. Another difference between NN and other machine learning methods (such as decision tree and svm) is that the testing error will grow if you train the model with too much iterations. The explaination is the **large numbers** mentioned above.
+<p align="center"> 
   <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/RestrictionBias.png" width="650"/>
+</p>
+
+**Preference Bias** is an inductive bias where some hypothesis are preferred over others. E.g. ID3 searches a complete hypothesis space but does so incompletely since once it finds a good hypothesis it stops (cannot find others).
+
+Two important related problem:
+
+1) How to choose model structure? Using the principle of occam's razor.
+2) How to initilize weights? Using **Small Random Values** (also can be explained with occam's razor). **Small** can prevent **large numbers**, and **Random** can help to skip bad local minimum.
+<p align="center"> 
+  <img src ="https://github.com/charliememory/AutonomousDriving/blob/master/images/PreferenceBias.png" width="650"/>
 </p>
