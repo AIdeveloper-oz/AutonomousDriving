@@ -1,5 +1,6 @@
 Color selection is not reliable, since it is very sensitive to illumination variations. So the standard pipeline of Lane Line Detection is: 
 **Grayscale --> Gaussian Blur --> Canny Edge Detection --> ROI --> Hough Transform Line Detection --> Fit Lines With Slope --> Adaptive Temporally Smooth**
+The fore stages should guarantee that all lines be detected, and the later stages should remove the noise as much as possibile.
 
 
 ###1. Canny Edge Detection using OpenCV function `Canny`
@@ -30,7 +31,11 @@ The **threshold** parameter specifies the minimum number of votes (intersections
 see https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python
 
 
-###4. Further reading: Improvement & Resources
+###4. Future Work
+The framework used here is useful in simple situations. But when in more complex scenes such as occlusions, bent roads, snowy or rainy weather, there will be more noises which may lead to failure. I imagine the temporal infomation can help to reduce the noisy and overcome the occlusions to make the detection more smooth temporally. Besides, there are too many hyperparameters here, which limits the generation ability of the methods. I think the data-driven machine learning method or other adaptive can solve it. Recently, the semantic segmentation is a popular topic, which can be used to find lane lines in uncontrolled situations.
+
+
+###5. Further reading: Improvement & Resources
 Canny Edge Detection - In this portion of the pipeline, there are two main parameters you can tune: lower threshold and higher threshold. Your parameters here seem reasonable. If you want to play around with some more parameters here, check out this [link](http://stackoverflow.com/questions/21324950/how-to-select-the-best-set-of-parameters-in-canny-edge-detection-algorithm-imple). The tutorial in the link will describe a common method for choosing threshold in Canny Edge Detection.
 
 This research [paper](http://airccj.org/CSCP/vol5/csit53211.pdf) goes into details on how to detect curves and faded lanes. It uses an extended version of hough lines algorithm to detect tangents to the curve which can help you detect the curve.
