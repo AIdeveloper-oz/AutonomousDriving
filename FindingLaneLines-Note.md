@@ -1,5 +1,5 @@
 Color selection is not reliable, since it is very sensitive to illumination variations. So the standard pipeline of Lane Line Detection is: 
-**Grayscale --> Gaussian Blur --> Canny Edge Detection --> ROI --> Hough Transform Line Detection --> Fit Lines With Slope --> Adaptive Temporally Smooth**
+**Grayscale --> Gaussian Blur --> Canny Edge Detection --> ROI --> Hough Transform Line Detection --> Fit Lines With Slope --> Filter wrong lines with Slope --> Adaptive Temporally Smooth**
 The fore stages should guarantee that all lines be detected, and the later stages should remove the noise as much as possibile.
 
 
@@ -32,7 +32,17 @@ see https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python
 
 
 ###4. Future Work
-The framework used here is useful in simple situations. But when in more complex scenes such as occlusions, bent roads, snowy or rainy weather, there will be more noises which may lead to failure. I imagine the temporal infomation can help to reduce the noisy and overcome the occlusions to make the detection more smooth temporally. Besides, there are too many hyperparameters here, which limits the generation ability of the methods. I think the data-driven machine learning method or other adaptive can solve it. Recently, the semantic segmentation is a popular topic, which can be used to find lane lines in uncontrolled situations.
+The framework used here is useful in simple situations. But when in more complex scenes such as occlusions, bent roads, snowy or rainy weather, there will be more noises which may lead to failure. I imagine the temporal infomation can help to reduce the noisy and overcome the occlusions to make the detection more smooth temporally. Besides, there are too many hyperparameters here, which limits the generation ability of the methods. 
+
+I think there are several ways to improve the performance:
+
+1) **HSV Color Selection:**, HSV is insensitive to brightness, but it may cut the generalization of the methods to other videos.
+
+2) **Histogram Equalization:** use cv2.equalizeHist(img) before blurring.
+
+3) **Adaptive Strategy:** I apply a Adaptive Temporally Smooth strategy in the line paramether update, and many other strategy can be applied to make methods adaptive.
+
+4) **Data-driven Machine Learning:** recently, the semantic segmentation is a popular topic, which can be used to find lane lines in uncontrolled situations.
 
 
 ###5. Further reading: Improvement & Resources
