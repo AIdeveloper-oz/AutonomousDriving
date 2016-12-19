@@ -1,7 +1,7 @@
 ###1. Linear Model (Function Approximate)
 The parameters of linear model Y=WX+b include W and b. The number of parameters are calculated as follows,
 <p align="center">
-  <img src ="./images/LinearParameter.png" width="800"/>
+  <img src ="./images/LinearParameter.png" width="600"/>
 </p>
 
 Linear model is efficient to compute using GPU. And the derivates w.r.t the X and W are constant, thus very stable.
