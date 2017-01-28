@@ -1,7 +1,7 @@
 ###1. Normalize the inputs
 Why do we need to normalize the inputs?
 1) Calculation with large and small figures together may result in large numeric errors. 
-2) To make the problem well conditioned. When the inputs is zero-mean and one-stanard-variance, it can be easy for weights initilization and loss convergence.
+2) To make the problem well conditioned. When the inputs is zero-mean and small equal-variance, it can be easy for weights initilization and loss convergence. For example, it is very important for SGD.
 <p align="center">
   <img src ="./images/NormalizedInput.png" width="600"/>
 </p>
