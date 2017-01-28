@@ -44,4 +44,17 @@ Something we should keep in mind:
 <p align="center">
   <img src ="./images/LR_Decay.png" width="600"/>
 </p>
+3）Black magic for SGD. When loss convergence stucks, we should reduce the learning rate first, especially for large model.
+<p align="center">
+  <img src ="./images/SGD_BlaceMagic.png" width="600"/>
+</p>
+4）Adagrad, which can set some hyper-parameters automatically. It often tend to be little worse than precisely tuned SGD with Momenton, but it can make things work more simply.
+<p align="center">
+  <img src ="./images/Adagrad.png" width="600"/>
+</p>
 
+###5. Summary
+Pipeline for linear shadow model: Input --> Linear --> Output
+<p align="center">
+  <img src ="./images/Pipeline4ShadowModel.png" width="600"/>
+</p>
