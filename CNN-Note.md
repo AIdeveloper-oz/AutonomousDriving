@@ -1,0 +1,26 @@
+###1. If we alreadly know the structure of data, we can design specific model (such as CNNs for image) which considers the data structure rather then use general model (such as multi-layer perception machines). For images, CNNs can group together adjacent pixels and treating them as a collective, while non-convolutional neural network always ignores this adjacency.
+
+###2. Statistical Invariance by Weights sharing
+Statistical invariance is very important for many tasks. Weights sharing is the key to achieve various statistical invariance properties in CNN/RNN or other methods. In a summary, if two inputs contaion the same information for the task, we share weights across them. Specifically, we should train the shared weights jointly and reuse them for these inputs. For different tasks, we may want different statistical invariance properties.
+For example: 
+1) Pedestrain detection needs detector invariant to colors. Typically, we use `gray=(R+G+B)/3` (or Y channel in YUV) as input instead of RGB. This is indead some kind of weights sharing, i.e. sharing weights across R, G, B. 
+2) Image classification needs the classifier invariant to object space positions. CNN use the weights sharing to solve it, i.e. each filter only contains one weight set which is shared across different positions.
+3) Sequential data may need model invariant to the time/order. RNN/Embeding technics achieve this with the idea of weights sharing across time/order.
+<p align="center">
+  <img src ="./images/StatisticalInvariance.png" width="700"/>
+</p>
+For the chain rule with weights sharing, the math is the same, we just add the derivates of every patch.
+<p align="center">
+  <img src ="./images/ChainRule4WeightSharing.png" width="700"/>
+</p>
+
+###3. CNNs understand
+1) Convolutional Pyrimid: Deeper conv layer has lower space dimensions and higher depth dimensions. This corresponds roughly to the sementic complexity of each layer's representation, i.e. deeper layer gives more sementic representation.
+<p align="center">
+  <img src ="./images/ConvPyramid.png" width="700"/>
+</p>
+2) Convolutional  Lingo: Depth, Feature Map, Patch/Kernel, Stride, Padding ("valid" padding/"same" padding).
+<p align="center">
+  <img src ="./images/ConvLingo.png" width="700"/>
+</p>
+3) Why multiple filters: Having multiple neurons for a given patch ensures that our CNN can learn to capture whatever characteristics the CNN learns are important.
