@@ -40,7 +40,7 @@ This can help the network to learn redundant representations, which can also be 
 <p align="center">
   <img src ="./images/Dropout2.png" width="700"/>
 </p>
-Note that, in order to get the same expectation of output activation, when we drop some input activations during training we need to scale the rest. And in the testing the drop and scaling are removed. 
+Note that, in order to get the same expectation of outgoing activation, when we drop some incoming activations during training we need to scale the rest. And in the testing stage, the drop and scaling are removed. 
 <p align="center">
   <img src ="./images/Dropout3.png" width="700"/>
 </p>
