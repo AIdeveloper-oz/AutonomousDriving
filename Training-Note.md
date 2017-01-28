@@ -8,11 +8,11 @@ Typically, in Statistics, the model parameters become better if more than 30 exa
 ###2. Gradient Descent (GD) vs Stochastic Gradient Descent (SGD)
 When dealing with large scale data， the compute for GD is expensive, usually 3 times more (why?). We can get estimate of the gradient descent of all data, just choose subset randomly and use their gradient descent. This estimation may be bad, so we need enough randomness and more iterations. While SGD is very fast and simple, so it performs well in practice.
 
-<p >
-  <img src ="./images/GD.png" width="400"/>
-</p>   
-<p >
-  <img src ="./images/SGD.png" width="400"/>
+<p align="center">
+  <img src ="./images/GD.png" width="600"/>
+</p>
+<p align="center">
+  <img src ="./images/SGD.png" width="600"/>
 </p>
 
-Left is GD, right is SGD.
+Top is GD, bottom is SGD.
