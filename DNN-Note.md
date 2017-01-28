@@ -20,8 +20,27 @@ BTW, the first layer effectively consists of the set of weights and biases appli
 
 ###3. Why deeper?
 1) We can typically get much more performance with fewer parameters by going deeper rather than wider.
-2) Deep model can capture hierarchical structure of objects, i.e. low layers capture simple edge feature, middle layers capture object-part-feature, high layers capture object-like feature.
+2) Deep model can capture hierarchical structure of objects, i.e. low layers capture simple lines or edges, middle layers capture parts or shapes, high layers capture objects.
 
 <p align="center">
   <img src ="./images/DeeperOrWider.png" width="700"/>
+</p>
+
+###4. Avoid the overfitting
+1) Early stopping
+2) Regularization term, such as L2-norm
+3) Dropout
+
+###5. Understanding and tricks about dropout
+Dropout is to drop some percent (e.g. 50%) of the input activations during training. 
+<p align="center">
+  <img src ="./images/Dropout.png" width="700"/>
+</p>
+This can help the network to learn redundant representations, which can also be treated as ensamble of different networks.
+<p align="center">
+  <img src ="./images/Dropout2.png" width="700"/>
+</p>
+Note that, in order to get the same expectation of output activation, when we drop some input activations during training we need to scale the rest. And in the testing the drop and scaling are removed. 
+<p align="center">
+  <img src ="./images/Dropout3.png" width="700"/>
 </p>
