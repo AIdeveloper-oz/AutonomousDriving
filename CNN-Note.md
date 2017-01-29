@@ -32,6 +32,7 @@ Given our input layer has a volume of `W`, our filter has a volume `(height * wi
 
 ###5. Advanced CNN topics
 1) **Pooling**
+
 Stride can reduce dimension to some extent, but it also removes a lot of information. While pooling can combine the information (still loss some info) as well as reduce dimension. Consequently, the dimenson reduction can help to prevent overfitting. The most common way is max-pooling. In tensorflow, the function is `tf.nn.max_pool()` which performs max pooling with the `ksize` parameter as the size of the filter and the `strides` parameter as the length of the stride. 2x2 filters with a stride of 2x2 are common in practice.
 <p align="center">
   <img src ="./images/MaxPooling.png" width="700"/>
@@ -41,6 +42,7 @@ Recently, pooling layers have fallen out of favor. Some reasons are:
 - Recent datasets are so big and complex we're more concerned about underfitting.
 - Dropout is a much better regularizer.
 - Pooling results in a loss of information. Think about the max pooling operation as an example. We only keep the largest of n numbers, thereby disregarding n-1 numbers completely.
+
 P.S. According to [A guide to convolution arithmetic for deep learning](https://arxiv.org/pdf/1603.07285v1.pdf), it says that there will be no padding in pool operator, i.e. just use 'VALID' of tensorflow.
 
 2) **1x1 Convolutions**
