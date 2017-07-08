@@ -94,9 +94,10 @@ def threshold(img_RGB,
                              'grad_y':(20, 100), 
                              'mag':(52, 107), 
                              'dir':(0.7, 1.3),
-                             'hls_s':(170, 255)}, 
+                             'hls_s':(100, 255)}, 
               ksize=15, # Choose a larger odd number to smooth gradient measurements
-              display=False):
+              display=False,
+              save=True):
 
     ## Apply each of the thresholding functions
     grad_x = abs_sobel_thresh(img_RGB, 'x', ksize, threshold_dic['grad_x'])
@@ -117,8 +118,9 @@ def threshold(img_RGB,
     combine_closed = cv2.morphologyEx(combine_masked, cv2.MORPH_CLOSE, kernel)
     combine_final = cv2.morphologyEx(combine_closed, cv2.MORPH_OPEN, kernel)
 
-    cv2.imwrite('combine_masked.jpg',combine_masked)
-    cv2.imwrite('combine_final.jpg',combine_final)
+    if save:
+        cv2.imwrite('combine_masked.jpg',combine_masked*255)
+        cv2.imwrite('combine_final.jpg',combine_final*255)
 
     if display:
         ax = plt.subplot(2,2,1)
@@ -135,7 +137,7 @@ def threshold(img_RGB,
         ax.set_title('combine_final')
         plt.show()
 
-    return combine_final
+    return combine_final, combine_final*255
 
 
 # def threshold_interative(img_RGB, 

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # %matplotlib qt
 import pickle
 
-def get_calibration(cal_img_dir, test_img_dir, nx, ny, display=False):
+def get_calibration(cal_img_dir, test_img_dir, nx, ny, display=False, save=True):
     #############################################################################
     #################### Detected corners on chessboard #########################
     #############################################################################
@@ -49,11 +49,12 @@ def get_calibration(cal_img_dir, test_img_dir, nx, ny, display=False):
     img_size = (img_BGR.shape[1], img_BGR.shape[0])
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img_size,None,None)
 
-    # Save the camera calibration result for later use (we won't worry about rvecs / tvecs)
-    dist_pickle = {}
-    dist_pickle["mtx"] = mtx
-    dist_pickle["dist"] = dist
-    pickle.dump( dist_pickle, open( 'wide_dist_pickle.p', 'wb' ) )
+    if save:
+        # Save the camera calibration result for later use (we won't worry about rvecs / tvecs)
+        dist_pickle = {}
+        dist_pickle["mtx"] = mtx
+        dist_pickle["dist"] = dist
+        pickle.dump( dist_pickle, open( 'wide_dist_pickle.p', 'wb' ) )
 
     # Test undistortion on an image
     if display:
