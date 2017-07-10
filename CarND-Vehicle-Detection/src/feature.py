@@ -111,9 +111,11 @@ def extract_features(img_paths, param, data_aug=True):
     for file in img_paths:
         file_features = []
         # Read in each one by one
+
+        # image = cv2.cvtColor(cv2.imread(file), cv2.COLOR_BGR2RGB)
         image = mpimg.imread(file)
-        # if file.endswith('jpg') or file.endswith('jpeg'):
-        #     image = image.astype(np.float32)/255
+        # # if file.endswith('jpg') or file.endswith('jpeg'):
+        # #     image = image.astype(np.float32)/255
         if file.endswith('png'):
             image = image.astype(np.float32)*255
         # pdb.set_trace()
@@ -128,6 +130,7 @@ def extract_features(img_paths, param, data_aug=True):
             file_features = []
             # Read in each one by one
             image = mpimg.imread(file)
+            # image = cv2.cvtColor(cv2.imread(file), cv2.COLOR_BGR2RGB)
             image = np.fliplr(image)
             # if file.endswith('jpg') or file.endswith('jpeg'):
             #     image = image.astype(np.float32)/255
@@ -147,6 +150,9 @@ def extract_features(img_paths, param, data_aug=True):
 def sample_hog_vis(car_img_path, notcar_img_path, param):
     plt.subplot(1,4,1)
     img = mpimg.imread(car_img_path)
+    if car_img_path.endswith('png'):
+        img = img.astype(np.float32)*255
+    # img = cv2.cvtColor(cv2.imread(car_img_path), cv2.COLOR_BGR2RGB)
     plt.tight_layout()
     plt.imshow(img)
     plt.title('original')
@@ -160,6 +166,9 @@ def sample_hog_vis(car_img_path, notcar_img_path, param):
 
     plt.subplot(1,4,1)
     img = mpimg.imread(notcar_img_path)
+    if notcar_img_path.endswith('png'):
+        img = img.astype(np.float32)*255
+    # img = cv2.cvtColor(cv2.imread(notcar_img_path), cv2.COLOR_BGR2RGB)
     plt.tight_layout()
     plt.imshow(img)
     plt.title('original')

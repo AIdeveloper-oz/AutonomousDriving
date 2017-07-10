@@ -35,7 +35,7 @@ param = {
     'cell_per_block' : 2, # HOG cells per block
     'hog_channel' : "ALL", # Can be 0, 1, 2, or "ALL"
     'spatial_size' : (16, 16), # Spatial binning dimensions
-    'hist_bins' : 16,    # Number of histogram bins
+    'hist_bins' : 32,    # Number of histogram bins
     'spatial_feat' : True, # Spatial features on or off
     'hist_feat' : True, # Histogram features on or off
     'hog_feat' : True, # HOG features on or off
@@ -82,16 +82,28 @@ param = model_param_pickle["param"]
 ## For writeup
 img_path = sorted(glob.glob('../test_images/*.jpg'))[-1]
 img_RGB = mpimg.imread(img_path)
+if img_path.endswith('png'):
+    img_RGB = img_RGB.astype(np.float32)*255
+# img_RGB = cv2.cvtColor(cv2.imread(img_path), cv2.COLOR_BGR2RGB)
 bbox_list = multiscale_search(img_RGB, svc, x_scaler, param)
 false_pos_filter(img_RGB, bbox_list, save=True)
 
+
+heat_list = []
+
 def pipeline_video(img):
+    global heat_list
     bbox_list = multiscale_search(img, svc, x_scaler, param)
-    after_img, _ =false_pos_filter(img, bbox_list, save=False)
+    after_img, _, heat_list =false_pos_filter(img, bbox_list, threshold=2, heat_list=heat_list, smooth=10, save=False)
     return after_img
 
 
 white_output = 'result.mp4'
 clip1 = VideoFileClip('../test_video.mp4')
+white_clip = clip1.fl_image(pipeline_video) #NOTE: this function expects color images!!
+white_clip.write_videofile(white_output, audio=False)
+
+white_output = 'project_video_result.mp4'
+clip1 = VideoFileClip('../project_video.mp4')
 white_clip = clip1.fl_image(pipeline_video) #NOTE: this function expects color images!!
 white_clip.write_videofile(white_output, audio=False)

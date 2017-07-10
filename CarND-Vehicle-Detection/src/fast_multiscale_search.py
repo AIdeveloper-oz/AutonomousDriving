@@ -88,11 +88,15 @@ def find_cars(img, window, ystart, ystop, scale, svc, x_scaler, color_space, ori
     
 def multiscale_search(img, svc, x_scaler, param):
     window = 64
-    ystart = [400]*4
-    ystop = [720-window*4, 720-window*3, 720-window*2, 720-window]
-    scale = [1, 1.5, 2, 4]
+    # ystart = [400]*3
+    # # ystop = [int(720-window*2), int(720-window*1.5), int(720-window)]
+    # ystop = [720-window]*3
+    # scale = [1, 1.5, 2]
+    ystart = 400
+    ystop = [int(720-window*1.8), int(720-window*1.5), int(720-window*1.3)]
+    scale = [1.3, 1.5, 1.8]
     bbox_list = []
     for i in range(len(scale)):
-        bbox_list.extend(find_cars(img, window, ystart[i], ystop[i], scale[i], svc, x_scaler, param['color_space'],
+        bbox_list.extend(find_cars(img, window, ystart, ystop[i], scale[i], svc, x_scaler, param['color_space'],
             param['orient'], param['pix_per_cell'], param['cell_per_block'], param['spatial_size'], param['hist_bins']))
     return bbox_list

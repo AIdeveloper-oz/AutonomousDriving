@@ -15,6 +15,6 @@ def get_classifer(scaled_x_train, scaled_x_test, y_train, y_test):
         print('Test Accuracy of SVC = ', round(svc.score(scaled_x_test, y_test), 4))
 
     # Train model using all data
-    svc = LinearSVC(C=10)
+    svc = LinearSVC(C=1)
     svc.fit(np.concatenate((scaled_x_train, scaled_x_test)), np.concatenate((y_train, y_test)))
     return svc

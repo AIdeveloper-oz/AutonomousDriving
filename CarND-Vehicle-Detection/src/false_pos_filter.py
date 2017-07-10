@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 import cv2
 from scipy.ndimage.measurements import label
+import os, pdb
 from utils import draw_boxes
 
 # # Read in a pickle file with bboxes saved
@@ -13,6 +14,7 @@ from utils import draw_boxes
 
 # # Read in image similar to one shown above 
 # image = mpimg.imread('test_image.jpg')
+# image = cv2.cvtColor(cv2.imread('test_image.jpg'), cv2.COLOR_BGR2RGB)
 # heat = np.zeros_like(image[:,:,0]).astype(np.float)
 
 def add_heat(heatmap, bbox_list):
@@ -42,20 +44,31 @@ def draw_labeled_bboxes(img, labels):
         nonzerox = np.array(nonzero[1])
         # Define a bounding box based on min/max x and y
         bbox = ((np.min(nonzerox), np.min(nonzeroy)), (np.max(nonzerox), np.max(nonzeroy)))
+        ## Sanity Check
+        # bbox_w = bbox[1][0] - bbox[0][0]
+        # bbox_h = bbox[1][1] - bbox[0][1]
+        # ratio = float(bbox_w)/float(bbox_h)
+        # if ratio<0.4 or ratio >2.5:
+        #     continue
         bbox_list.append(bbox)
         # Draw the box on the image
         cv2.rectangle(img, bbox[0], bbox[1], (0,0,255), 6)
     # Return the image
     return img, bbox_list
 
-def false_pos_filter(img, bbox_list, save=False):
+def false_pos_filter(img, bbox_list, threshold=1, heat_list=None, smooth=10, save=False):
     heat = np.zeros_like(img[:,:,0]).astype(np.float)
 
     # Add heat to each box in box list
     heat = add_heat(heat,bbox_list)
         
     # Apply threshold to help remove false positives
-    heat = apply_threshold(heat,1)
+    if heat_list is not None:
+        if len(heat_list)>=smooth:
+            heat_list.pop(0)
+        heat_list.append(heat)
+        heat = np.array(heat_list).mean(axis=0)
+    heat = apply_threshold(heat,threshold)
 
     # Visualize the heatmap when displaying    
     heatmap = np.clip(heat, 0, 255)
@@ -79,4 +92,4 @@ def false_pos_filter(img, bbox_list, save=False):
         plt.tight_layout()
         plt.savefig('false_pos_filter.jpg', bbox_inches='tight', dpi=400)
 
-    return after_img, filted_bbox_list
+    return after_img, filted_bbox_list, heat_list
