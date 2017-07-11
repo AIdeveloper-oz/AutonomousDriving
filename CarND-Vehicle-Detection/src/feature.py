@@ -151,8 +151,8 @@ def extract_features(img_paths, param, data_aug=True):
 def sample_hog_vis(car_img_path, notcar_img_path, param):
     plt.subplot(1,4,1)
     img = mpimg.imread(car_img_path)
-    if car_img_path.endswith('png'):
-        img = img.astype(np.float32)*255
+    # if car_img_path.endswith('png'):
+    #     img = img.astype(np.float32)*255
     # img = cv2.cvtColor(cv2.imread(car_img_path), cv2.COLOR_BGR2RGB)
     plt.tight_layout()
     plt.imshow(img)
@@ -167,8 +167,8 @@ def sample_hog_vis(car_img_path, notcar_img_path, param):
 
     plt.subplot(1,4,1)
     img = mpimg.imread(notcar_img_path)
-    if notcar_img_path.endswith('png'):
-        img = img.astype(np.float32)*255
+    # if notcar_img_path.endswith('png'):
+    #     img = img.astype(np.float32)*255
     # img = cv2.cvtColor(cv2.imread(notcar_img_path), cv2.COLOR_BGR2RGB)
     plt.tight_layout()
     plt.imshow(img)
