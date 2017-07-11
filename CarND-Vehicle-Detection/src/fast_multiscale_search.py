@@ -93,8 +93,8 @@ def multiscale_search(img, svc, x_scaler, param):
     # ystop = [720-window]*3
     # scale = [1, 1.5, 2]
     ystart = 400
-    ystop = [int(720-window*1.8), int(720-window*1.5), int(720-window*1.3)]
-    scale = [1.3, 1.5, 1.8]
+    ystop = [int(720-window*2.2), int(720-window*1.8), int(720-window*1.5), int(720-window*1.3)]
+    scale = [1.3, 1.5, 1.8, 2.2]
     bbox_list = []
     for i in range(len(scale)):
         bbox_list.extend(find_cars(img, window, ystart, ystop[i], scale[i], svc, x_scaler, param['color_space'],

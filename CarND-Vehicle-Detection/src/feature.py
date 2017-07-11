@@ -69,6 +69,7 @@ def single_img_features(img, color_space='RGB', spatial_size=(32, 32),
     #2) Apply color conversion if other than 'RGB'
     if color_space != 'RGB':
         feature_image = color_convert_from_RGB(img, color_space)
+        # pdb.set_trace()
     else: feature_image = np.copy(img)      
     #3) Compute spatial features if flag is set
     if spatial_feat == True:
@@ -116,8 +117,8 @@ def extract_features(img_paths, param, data_aug=True):
         image = mpimg.imread(file)
         # # if file.endswith('jpg') or file.endswith('jpeg'):
         # #     image = image.astype(np.float32)/255
-        if file.endswith('png'):
-            image = image.astype(np.float32)*255
+        # if file.endswith('png'):
+        #     image = image.astype(np.float32)*255
         # pdb.set_trace()
         file_features = single_img_features(image, param['color_space'], param['spatial_size'],
                         param['hist_bins'], param['orient'], 
@@ -134,8 +135,8 @@ def extract_features(img_paths, param, data_aug=True):
             image = np.fliplr(image)
             # if file.endswith('jpg') or file.endswith('jpeg'):
             #     image = image.astype(np.float32)/255
-            if file.endswith('png'):
-                image = image.astype(np.float32)*255
+            # if file.endswith('png'):
+            #     image = image.astype(np.float32)*255
             # pdb.set_trace()
             file_features = single_img_features(image, param['color_space'], param['spatial_size'],
                             param['hist_bins'], param['orient'], 

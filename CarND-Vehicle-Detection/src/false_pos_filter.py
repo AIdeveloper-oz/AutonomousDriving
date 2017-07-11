@@ -64,6 +64,8 @@ def false_pos_filter(img, bbox_list, threshold=1, heat_list=None, smooth=10, sav
         
     # Apply threshold to help remove false positives
     if heat_list is not None:
+        while len(heat_list)<smooth-1:
+            heat_list.insert(0, np.zeros_like(heat))
         if len(heat_list)>=smooth:
             heat_list.pop(0)
         heat_list.append(heat)
@@ -76,20 +78,23 @@ def false_pos_filter(img, bbox_list, threshold=1, heat_list=None, smooth=10, sav
     # Find final boxes from heatmap using label function
     labels = label(heatmap)
     after_img, filted_bbox_list = draw_labeled_bboxes(np.copy(img), labels)
-
+    pdb.set_trace()
     if save:
         # fig = plt.figure()
-        plt.subplot(131)
+        plt.subplot(221)
         before_img = draw_boxes(img, bbox_list, color=(0, 0, 255), thick=6)
         plt.imshow(before_img)
         plt.title('Before filtering')
-        plt.subplot(132)
-        plt.imshow(after_img)
-        plt.title('After filtering')
-        plt.subplot(133)
+        plt.subplot(222)
+        plt.imshow(labels[0], cmap='gray')
+        plt.title('Labels')
+        plt.subplot(223)
         plt.imshow(heatmap, cmap='hot')
         plt.title('Heat Map')
         plt.tight_layout()
+        plt.subplot(224)
+        plt.imshow(after_img)
+        plt.title('After filtering')
         plt.savefig('false_pos_filter.jpg', bbox_inches='tight', dpi=400)
 
     return after_img, filted_bbox_list, heat_list

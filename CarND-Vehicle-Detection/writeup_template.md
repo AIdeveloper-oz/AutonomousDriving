@@ -1,8 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Vehicle Detection Project**
 
 The goals / steps of this project are the following:
@@ -15,57 +10,74 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[image1]: ./output_images/car_not_car.jpg
+[image2]: ./output_images/car_hog.jpg
+[image3]: ./output_images/notcar_hog.jpg
+[image4]: ./output_images/false_pos_filter.jpg
+
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 
 ###Histogram of Oriented Gradients (HOG)
 
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
+####1. Features extraction.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in funtion `single_img_features()` (lines 63-99 in `src/feature.py`).  
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+I started by reading in all the `vehicle` and `non-vehicle` images in function `prepare_data()` (lines 25-68 in `src/utils.py`).  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
+Here are examples using the `HSV` color space and HOG parameters of `orientations=11`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 ![alt text][image2]
+![alt text][image3]
 
-####2. Explain how you settled on your final choice of HOG parameters.
+####2. HOG parameters choice.
 
-I tried various combinations of parameters and...
+I tried various combinations of parameters and finally I use the following settings  (lines 31-42 in `src/main.py`):
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+```python
+param = {
+    'color_space' : 'HSV', # Can be RGB, HSV, (LUV, HLS, YUV, YCrCb leads to Nan for PNG image)
+    'orient' : 11,  # HOG orientations
+    'pix_per_cell' : 8, # HOG pixels per cell
+    'cell_per_block' : 2, # HOG cells per block
+    'hog_channel' : "ALL", # Can be 0, 1, 2, or "ALL"
+    'spatial_size' : (16, 16), # Spatial binning dimensions
+    'hist_bins' : 32,    # Number of histogram bins
+    'spatial_feat' : True, # Spatial features on or off
+    'hist_feat' : True, # Histogram features on or off
+    'hog_feat' : True, # HOG features on or off
+}
+```
 
-I trained a linear SVM using...
+####3. Classifier training.
+
+To avoid the problem of time-series data for train/test split, I choose the first 90% images in each folder for training and the last 10% for testing. I use both HOG and color histogram feature mentioned above.
+
+I trained a linear SVM using different `C` parameter, but the only differenc is the training speed and the test Accuracy is the same.
+```
+5.92 Seconds to train SVC with C=10.000000...
+Test Accuracy of SVC =  0.9902
+24.37 Seconds to train SVC with C=1.000000...
+Test Accuracy of SVC =  0.9902
+24.41 Seconds to train SVC with C=0.100000...
+Test Accuracy of SVC =  0.9902
+```
+Finally, I use `C=1` and all the data to train the classifer.
 
 ###Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+I decided to search windows in scale 
 
-![alt text][image3]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
