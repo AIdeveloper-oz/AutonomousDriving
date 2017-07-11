@@ -13,7 +13,9 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/car_not_car.jpg
 [image2]: ./output_images/car_hog.jpg
 [image3]: ./output_images/notcar_hog.jpg
-[image4]: ./output_images/false_pos_filter.jpg
+[image4]: ./output_images/bbox.png
+[image5]: ./output_images/false_pos_filter.jpg
+[image6]: ./output_images/result.png
 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -59,9 +61,9 @@ param = {
 
 ####3. Classifier training.
 
-To avoid the problem of time-series data for train/test split, I choose the first 90% images in each folder for training and the last 10% for testing. I use both HOG and color histogram feature mentioned above.
+To avoid the problem of time-series data for train/test split, I chose the first 90% images in each folder for training and the last 10% for testing. Besides, I did left-right flip to augment the data.
 
-I trained a linear SVM using different `C` parameter, but the only differenc is the training speed and the test Accuracy is the same.
+I used both HOG and color histogram feature mentioned above and trained a linear SVM using different `C` parameter, but the only differenc is the training speed and the test Accuracy is the same.
 ```
 5.92 Seconds to train SVC with C=10.000000...
 Test Accuracy of SVC =  0.9902
@@ -74,40 +76,37 @@ Finally, I use `C=1` and all the data to train the classifer.
 
 ###Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+####1. Implementation and parameter choice.
 
-I decided to search windows in scale 
+The code for this step is contained in funtion `multiscale_search()` (lines 89-102 in `src/fast_multiscale_search.py`).  
+
+To speed up, I first extracted hog features of the whole images and sub-sampled these features to get all of the overlaying windows. I decided to search windows in scale `[1.3, 1.5, 1.8, 2.2]` and limit different earch regions for different scales, since smaller objects appear in farther distance.
 
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on two scales using HSV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
 ![alt text][image4]
 ---
 
 ### Video Implementation
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+####1. Final video output. 
+Here's a [link to my video result](https://youtu.be/FHHEedd39wk)
 
 
-####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+####2. False positives filter and temporal smoothing.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+The code of this step is in function 'false_pos_filter()' (lines 59-100 in `src/false_pos_filter.py`).  
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  To make the reulsts more smooth and robust, I also allpy a temporal window of 6 frames to smooth the result (lines 66-73 in `src/false_pos_filter.py`).
 
-### Here are six frames and their corresponding heatmaps:
-
+### Here is an example result showing the heatmap, the result of `scipy.ndimage.measurements.label()` and the bounding boxes:
 ![alt text][image5]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
+### Here the resulting bounding boxes are drawn onto the project_video.mp4:
 ![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
 
 
 ---
@@ -116,5 +115,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The `mpimg.imread()` gives different range for png and jpg images. I used `mpimg.imread()*255` for png images but seems incorrect. Since the `cv2.cvtColor()` can rescale the range to the same for png and jpg images, I used the combination of `mpimg.imread()` and `cv2.cvtColor()` to avoid the range problem.
+
+There are still some false positive in the results, especially during serious illumination variation (e.g. shadow). I think more data collection and augmentation can help to aleviate this problem.
 
