@@ -19,56 +19,56 @@ from false_pos_filter import false_pos_filter
 ########################################################################
 ############################# Training #################################
 
-# ################# Prepare data
-# print('################# Prepare data ###################')
-# data_dir = '../data'
-# cars_train, cars_test, notcars_train, notcars_test = prepare_data(data_dir, train_ratio=0.9)
+################# Prepare data
+print('################# Prepare data ###################')
+data_dir = '../data'
+cars_train, cars_test, notcars_train, notcars_test = prepare_data(data_dir, train_ratio=0.9)
 
 
-# ################ Extract feature
-# print('################ Extract feature #################')
-# ## Parameters
-# param = {
-#     'color_space' : 'HSV', # Can be RGB, HSV, (LUV, HLS, YUV, YCrCb leads to Nan for PNG image)
-#     'orient' : 11,  # HOG orientations
-#     'pix_per_cell' : 8, # HOG pixels per cell
-#     'cell_per_block' : 2, # HOG cells per block
-#     'hog_channel' : "ALL", # Can be 0, 1, 2, or "ALL"
-#     'spatial_size' : (16, 16), # Spatial binning dimensions
-#     'hist_bins' : 32,    # Number of histogram bins
-#     'spatial_feat' : True, # Spatial features on or off
-#     'hist_feat' : True, # Histogram features on or off
-#     'hog_feat' : True, # HOG features on or off
-# }
+################ Extract feature
+print('################ Extract feature #################')
+## Parameters
+param = {
+    'color_space' : 'YCrCb', # Can be RGB, HSV, (LUV, HLS, YUV, YCrCb leads to Nan for PNG image)
+    'orient' : 11,  # HOG orientations
+    'pix_per_cell' : 8, # HOG pixels per cell
+    'cell_per_block' : 2, # HOG cells per block
+    'hog_channel' : "ALL", # Can be 0, 1, 2, or "ALL"
+    'spatial_size' : (16, 16), # Spatial binning dimensions
+    'hist_bins' : 32,    # Number of histogram bins
+    'spatial_feat' : False, # Spatial features on or off
+    'hist_feat' : False, # Histogram features on or off
+    'hog_feat' : True, # HOG features on or off
+}
 
-# ## Hog visualization
-# sample_hog_vis(cars_train[0], notcars_train[0], param)
+## Hog visualization
+sample_hog_vis(cars_train[0], notcars_train[0], param)
 
-# ## Extract features
-# cars_train_fea = extract_features(cars_train, param, data_aug=True)
-# cars_test_fea = extract_features(cars_test, param, data_aug=True)
-# notcars_train_fea = extract_features(notcars_train, param, data_aug=True)
-# notcars_test_fea = extract_features(notcars_test, param, data_aug=True)
-# #
-# x_train = np.vstack((cars_train_fea, notcars_train_fea)).astype(np.float64)  
-# x_test = np.vstack((cars_test_fea, notcars_test_fea)).astype(np.float64)             
-# # Fit a per-column scaler
-# x_scaler = StandardScaler().fit(x_train)
-# scaled_x_train = x_scaler.transform(x_train)
-# scaled_x_test = x_scaler.transform(x_test)
-# # Define the labels vector
-# y_train = np.hstack((np.ones(len(cars_train_fea)), np.zeros(len(notcars_train_fea))))
-# y_test = np.hstack((np.ones(len(cars_test_fea)), np.zeros(len(notcars_test_fea))))
-
-
-# ################# Classification
-# print('################ Classification #################')
-# svc = get_classifer(scaled_x_train, scaled_x_test, y_train, y_test)
+## Extract features
+cars_train_fea = extract_features(cars_train, param, data_aug=True)
+cars_test_fea = extract_features(cars_test, param, data_aug=True)
+notcars_train_fea = extract_features(notcars_train, param, data_aug=True)
+notcars_test_fea = extract_features(notcars_test, param, data_aug=True)
+#
+x_train = np.vstack((cars_train_fea, notcars_train_fea)).astype(np.float64)  
+x_test = np.vstack((cars_test_fea, notcars_test_fea)).astype(np.float64)             
+# Fit a per-column scaler
+x_scaler = StandardScaler().fit(x_train)
+scaled_x_train = x_scaler.transform(x_train)
+scaled_x_test = x_scaler.transform(x_test)
+# Define the labels vector
+y_train = np.hstack((np.ones(len(cars_train_fea)), np.zeros(len(notcars_train_fea))))
+y_test = np.hstack((np.ones(len(cars_test_fea)), np.zeros(len(notcars_test_fea))))
 
 
-# ################# Save
-# model_param_pickle = {'svc':svc, 'x_scaler':x_scaler, 'param':param}
-# pickle.dump( model_param_pickle, open( "model_param_pickle.p", "wb" ))
+################# Classification
+print('################ Classification #################')
+svc = get_classifer(scaled_x_train, scaled_x_test, y_train, y_test)
+
+
+################# Save
+model_param_pickle = {'svc':svc, 'x_scaler':x_scaler, 'param':param}
+pickle.dump( model_param_pickle, open( "model_param_pickle.p", "wb" ))
 
 
 ########################################################################
@@ -87,7 +87,7 @@ img_RGB = mpimg.imread(img_path)
 # img_RGB = cv2.cvtColor(cv2.imread(img_path), cv2.COLOR_BGR2RGB)
 bbox_list = multiscale_search(img_RGB, svc, x_scaler, param)
 false_pos_filter(img_RGB, bbox_list, save=True)
-pdb.set_trace()
+# pdb.set_trace()
 
 
 heat_list = []

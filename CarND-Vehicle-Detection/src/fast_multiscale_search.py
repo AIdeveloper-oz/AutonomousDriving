@@ -18,7 +18,8 @@ from utils import *
 # img = mpimg.imread('test_image.jpg')
 
 # Define a single function that can extract features using hog sub-sampling and make predictions
-def find_cars(img, window, ystart, ystop, scale, svc, x_scaler, color_space, orient, pix_per_cell, cell_per_block, spatial_size, hist_bins):
+def find_cars(img, window, ystart, ystop, scale, svc, x_scaler, color_space, orient, pix_per_cell, cell_per_block, 
+    spatial_size, hist_bins, spatial_feat=True, hist_feat=True, hog_feat=True):
     
     # draw_img = np.copy(img)
     img = img.astype(np.float32)/255
@@ -55,24 +56,31 @@ def find_cars(img, window, ystart, ystop, scale, svc, x_scaler, color_space, ori
         for yb in range(nysteps):
             ypos = yb*cells_per_step
             xpos = xb*cells_per_step
+            img_features = []
             # Extract HOG for this patch
-            hog_feat1 = hog1[ypos:ypos+nblocks_per_window, xpos:xpos+nblocks_per_window].ravel() 
-            hog_feat2 = hog2[ypos:ypos+nblocks_per_window, xpos:xpos+nblocks_per_window].ravel() 
-            hog_feat3 = hog3[ypos:ypos+nblocks_per_window, xpos:xpos+nblocks_per_window].ravel() 
-            hog_features = np.hstack((hog_feat1, hog_feat2, hog_feat3))
+            if hog_feat:
+                hog_feat1 = hog1[ypos:ypos+nblocks_per_window, xpos:xpos+nblocks_per_window].ravel() 
+                hog_feat2 = hog2[ypos:ypos+nblocks_per_window, xpos:xpos+nblocks_per_window].ravel() 
+                hog_feat3 = hog3[ypos:ypos+nblocks_per_window, xpos:xpos+nblocks_per_window].ravel() 
+                hog_features = np.hstack((hog_feat1, hog_feat2, hog_feat3))
+                img_features.append(hog_features)
 
             xleft = xpos*pix_per_cell
             ytop = ypos*pix_per_cell
 
             # Extract the image patch
             subimg = cv2.resize(ctrans_tosearch[ytop:ytop+window, xleft:xleft+window], (64,64))
-          
+            
             # Get color features
-            spatial_features = bin_spatial(subimg, size=spatial_size)
-            hist_features = color_hist(subimg, nbins=hist_bins)
+            if spatial_feat:
+                spatial_features = bin_spatial(subimg, size=spatial_size)
+                img_features.append(spatial_features)
+            if hist_feat:
+                hist_features = color_hist(subimg, nbins=hist_bins)
+                img_features.append(hist_features)
 
             # Scale features and make a prediction
-            test_features = x_scaler.transform(np.hstack((spatial_features, hist_features, hog_features)).reshape(1, -1))    
+            test_features = x_scaler.transform(np.hstack(img_features).reshape(1, -1))    
             #test_features = x_scaler.transform(np.hstack((shape_feat, hist_feat)).reshape(1, -1))    
             test_prediction = svc.predict(test_features)
             
@@ -98,5 +106,6 @@ def multiscale_search(img, svc, x_scaler, param):
     bbox_list = []
     for i in range(len(scale)):
         bbox_list.extend(find_cars(img, window, ystart, ystop[i], scale[i], svc, x_scaler, param['color_space'],
-            param['orient'], param['pix_per_cell'], param['cell_per_block'], param['spatial_size'], param['hist_bins']))
+            param['orient'], param['pix_per_cell'], param['cell_per_block'], param['spatial_size'], param['hist_bins'], 
+            param['spatial_feat'], param['hist_feat'], param['hog_feat']))
     return bbox_list

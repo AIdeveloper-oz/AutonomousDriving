@@ -78,7 +78,7 @@ def false_pos_filter(img, bbox_list, threshold=1, heat_list=None, smooth=10, sav
     # Find final boxes from heatmap using label function
     labels = label(heatmap)
     after_img, filted_bbox_list = draw_labeled_bboxes(np.copy(img), labels)
-    pdb.set_trace()
+    # pdb.set_trace()
     if save:
         # fig = plt.figure()
         plt.subplot(221)
